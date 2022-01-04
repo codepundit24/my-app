@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
-function App() {
+export default function App(){
+  return( 
+  <div >
+   <Mycomponents />
+    </div>
+    );
+}
+
+function Mycomponents(){
+  let [message, setMessage] = useState("Tweet here..");
+  let [list, setList] = useState([]);
+
+  const tweetHere = () => {
+    const newList = [message, ...list];
+
+    setList(newList);
+    setMessage("");
+  };
+
+  const changeMessage = (e) => {
+    const newMessage = e.target.value;
+    setMessage(newMessage);
+  };
+
+  const deleteTweet = () => {
+    list.splice(0,1);
+    setList([...list]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Working with Input element</h1>
+
+      <input type="text" value={message} onChange = {changeMessage}/>
+      <input type="button" value = "Tweet to everyone" onClick={tweetHere}/>
+
+      <input type="button" value = "Delete Tweet to everyone" onClick={deleteTweet}/>
+      <div id="parent">
+        {list.map((item) => (
+        <div>{item}</div>
+      ))}
+      </div>
     </div>
   );
 }
-
-export default App;
